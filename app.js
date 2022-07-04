@@ -1,7 +1,6 @@
 const express = require('express')
 const dotenv = require('dotenv').config()
 const port = process.env.PORT || 5000
-const config = require("./config/database")
 const mongoose = require('mongoose')
 const passport = require('passport')
 const session = require('express-session')
@@ -23,9 +22,6 @@ const app = express()
 
 app.use(cors())
 
-// Set Static Folder
-app.use(express.static(path.join(__dirname, 'public')));
-
 // express bodyparser
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
@@ -42,10 +38,13 @@ app.use('/api/users', require('./routes/userRoutes'))
 
 app.get('/', (req, res) => {
     res.send('invaild endpoint');
-  });
-  
-app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public/index.html'));
 });
+
+if (process.env.NODE_ENV === 'production') {
+    app.use(express.static(path.join(__dirname, 'public')));
+    app.get('*', (req, res) => {
+        res.sendFile(path.join(__dirname, 'public/index.html'));
+    });
+}
 
 app.listen(port, () => console.log(`Server started on port ${port}`))

@@ -4,13 +4,14 @@
   "description": "Math question forum",
   "main": "app.js",
   "scripts": {
-    "dev": "nodemon app.js",
+    "dev": "concurrently \"node app.js\" \"npm start --prefix ./angular-src\"",
     "start": "node app.js",
-    "build": "cd angular-src && ng build"
+    "build": "npm run build --prefix ./angular-src"
   },
   "author": "Lauri Pöhö",
   "license": "ISC",
   "devDependencies": {
+    "concurrently": "^7.2.2",
     "nodemon": "^2.0.16"
   },
   "dependencies": {

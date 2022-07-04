@@ -3,6 +3,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, map, catchError } from 'rxjs';
 import { JwtHelperService } from '@auth0/angular-jwt';
 
+import { environment } from 'src/environments/environment';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -10,8 +12,8 @@ export class AuthService {
 
   authToken: any
   user: any
-  
-  url = "api/users"
+
+  url = `${environment.apiUrl}/api/users`
 
   constructor(
     private http: HttpClient,
