@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 
 import { QuestionService } from 'src/app/services/question.service';
 
+import { Question } from 'src/app/interfaces/question.interface'
+
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -11,7 +13,7 @@ import { QuestionService } from 'src/app/services/question.service';
 })
 export class DashboardComponent implements OnInit {
 
-  questions = new Array<any>()
+  questions = new Array<Question>()
 
   constructor(
     private questionService: QuestionService,
@@ -21,7 +23,7 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit(): void {
     this.questionService.getQuestions().subscribe(response => {
-      this.questions = response.posts
+      this.questions = response
     })
   }
 

@@ -1,9 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { pluck } from 'rxjs/operators';
 import { AuthService } from './auth.service';
 
 import { environment } from 'src/environments/environment';
+
+import { Question } from '../interfaces/index'
 
 @Injectable({
   providedIn: 'root'
@@ -18,10 +21,10 @@ export class QuestionService {
   ) { }
 
   // GET questions from server
-  getQuestions(): Observable<any> {
+  getQuestions(): Observable<Array<Question>> {
     let headers = new HttpHeaders();
     headers = headers.set('Content-Type', 'application/json; charset=utf-8');
-    return this.http.get<any>(this.url, {headers})
+    return this.http.get<any>(this.url, {headers}).pipe(pluck('posts'))
   }
 
   // GET question by id
